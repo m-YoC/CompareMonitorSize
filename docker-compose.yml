@@ -1,0 +1,14 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.dockerfile
+    image: frontend
+    volumes:
+      - "./app:/frontend/app"
+    tty: true
+    stdin_open: true
+    # working_dir: "/frontend"
+    ports:
+     - "8080:8080"

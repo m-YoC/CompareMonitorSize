@@ -1,0 +1,6 @@
+/.git
+
+!/**/.keep
+
+/app/**
+!/app/.keep
