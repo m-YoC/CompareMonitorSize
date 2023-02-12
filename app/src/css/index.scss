@@ -1,0 +1,51 @@
+@import url(~sanitize.css);
+
+$font-color: #444;
+
+html {
+    font-size: 16px;
+}
+
+
+html.lock-browser, body.lock-browser {
+    overflow: hidden;
+}
+
+header {
+    background: lightcoral;
+    text-align: center;
+    height: 3em;
+}
+
+.menu {
+    background: lightgreen;
+    text-align: center;
+}
+
+.view {
+    position: relative;
+    background: cyan;
+    text-align: center;
+    height: 600px;
+    overflow: hidden;
+
+    .flowbox {
+        position: absolute;
+        cursor: grab;
+        // background: brown;
+        text-align: center;
+    }
+}
+
+.settings {
+    background: limegreen;
+    text-align: center;
+}
+
+footer {
+    background: lightsalmon;
+    text-align: center;
+    bottom: 0;
+
+}
+
