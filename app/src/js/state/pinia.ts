@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
-import { Box, Box1, Box2, changeToBox1 } from "./box";
+import { Box, Box1, Box2, changeToBox1, convert } from "./box";
 
 
 // Composition API type
@@ -55,25 +55,35 @@ export const useItemStore = defineStore("item", () => {
     const boxes = ref<Box[]>([]);
     const scale = ref(1);
 
+    const preset: Box =  {type: "Monitor", aspect: { w: 1920, h: 1080, arePixelNums: true }, diagonal: 23, top: 0, left: 0, unit: "in"};
     const golden = ref<Box[]>(
         [
-            {type: "Monitor", width: 640, height: 480, top: 20, left: 20, unit: "milli"},
-            {type: "Monitor", width: 1280, height: 720, top: 10, left: 160, unit: "milli"},
-            {type: "Monitor", aspect: { w: 21, h: 9, arePixelNums: false }, diagonal: 1800, top: 30, left: 30, unit: "milli"}
+            {type: "Monitor", width: 320, height: 240, top: 20, left: 20, unit: "mm"},
+            {type: "Monitor", width: 640, height: 360, top: 10, left: 160, unit: "mm"},
+            {type: "Monitor", aspect: { w: 21, h: 9, arePixelNums: false }, diagonal: 27.1, top: 30, left: 30, unit: "in"}
         ]
     );
+    const setGolden = () => {
+        boxes.value = golden.value;
+    }
 
     const scaling = (src: Box[]): Box1[] => {
         return src.map(value => {
             const v = changeToBox1(value);
-            return {...v, width: v.width * scale.value, height: v.height * scale.value};
+            const toUnit = "mm";
+            return {...v, 
+                width:  convert(v.width , v.unit, toUnit) * scale.value, 
+                height: convert(v.height, v.unit, toUnit) * scale.value,
+                unit: toUnit
+            };
         });
     };
 
     const scalingBoxes = () => scaling(boxes.value);
-    const setGolden = () => {
-        boxes.value = golden.value;
-    }
+    
+    const addNewBox = () => {
+        boxes.value.push({...preset});
+    };
 
     const releaseCurrentSelectedItem = ref<() => void>(() => {});
 

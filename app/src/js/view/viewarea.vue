@@ -18,7 +18,6 @@ const testStore = useTestStore();
 const iStore = useItemStore();
 
 onMounted(() => {
-    iStore.scale = 0.5;
     iStore.setGolden();
 });
 

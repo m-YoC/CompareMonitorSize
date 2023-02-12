@@ -267,6 +267,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/convert-units@^2.3.5":
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/@types/convert-units/-/convert-units-2.3.5.tgz#e6b617a6af9ae39daca7a4a199064cfcc3bf28ee"
+  integrity sha512-uPxhvoCflbz9hm0aiLEHnwT7JTdhJcKUmArdmmKtWjbK+tw9hUguYh0vTpA5ugqc9/a+hWdPB7NW0SX6peLS8g==
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
@@ -1594,6 +1599,11 @@ content-type@~1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.5.tgz#8b773162656d1d1086784c8f23a54ce6d73d7918"
   integrity sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==
+
+convert-units@^3.0.0-beta.5:
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/convert-units/-/convert-units-3.0.0-beta.5.tgz#3dc26a7d073c00924e189d334b59e76dbd6cf023"
+  integrity sha512-qCy+1W8CqfK8TDuJTdT2E9hNBpG9kDub6rYsrVXOVfdmuFOLqj8RQnW8o26MFCz2XdD3beyOYZYoh9Nh7jSABA==
 
 cookie-signature@1.0.6:
   version "1.0.6"

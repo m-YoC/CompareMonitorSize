@@ -1,4 +1,11 @@
+// `allMeasures` includes all the measures packaged with this library
+import configureMeasurements from "convert-units";
+import length from "convert-units/lib/cjs/definitions/length";
+
 import { ItemType } from "../lib/types";
+
+
+export type LengthUnit = "mm" | "in";
 
 export interface BoxBaseData {
     type: ItemType;
@@ -6,8 +13,6 @@ export interface BoxBaseData {
     left: number;
     unit: LengthUnit;
 };
-
-export type LengthUnit = "milli";
 
 interface BoxSize1 {
     width: number;
@@ -27,14 +32,14 @@ export type Box = Box1 | Box2;
 export const isBox1 = (src: Box): src is Box1 => {
     const t = src as Box1;
     return (
-        typeof t?.width == "number" && typeof t?.height == "number"
+        typeof t?.width === "number" && typeof t?.height === "number"
     );
 };
 
 export const isBox2 = (src: Box): src is Box2 => {
     const t = src as Box2;
     return (
-        typeof t?.diagonal == "number"
+        typeof t?.diagonal === "number"
     );
 };
 
@@ -53,4 +58,9 @@ export const changeToBox1 = (src: Box): Box1 => {
     }
 
     return src;
+};
+
+const convertFunc = configureMeasurements({length});
+export const convert = (num: number, from: LengthUnit, to: LengthUnit): number => {
+    return convertFunc(num).from(from).to(to);
 };
