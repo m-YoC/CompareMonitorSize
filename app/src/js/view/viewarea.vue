@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, computed } from "vue";
 import Box from "./flowbox.vue";
 import Selector from "./item/selector.vue";
 import { useTestStore, useItemStore } from "../state/state";
@@ -16,7 +17,11 @@ import { useTestStore, useItemStore } from "../state/state";
 const testStore = useTestStore();
 const iStore = useItemStore();
 
-iStore.scale = 0.5;
-const boxes = iStore.golden();
+onMounted(() => {
+    iStore.scale = 0.5;
+    iStore.setGolden();
+});
+
+const boxes = computed(() => iStore.scalingBoxes());
 
 </script>

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
-import { ItemType } from "../view/item/selector";
+import { Box, Box1, Box2, changeToBox1 } from "./box";
+
 
 // Composition API type
 export const useTestStore = defineStore("test", () => {
@@ -46,37 +47,35 @@ export const usePointerStore = defineStore("pointer", () => {
     return { isDown, moveEvent, upEvent, registerEvent, clear };
 });
 
-interface Box {
-    type: ItemType;
-    width: number;
-    height: number;
-    top: number;
-    left: number;
-};
+
+
 
 export const useItemStore = defineStore("item", () => {
 
     const boxes = ref<Box[]>([]);
     const scale = ref(1);
 
-    const goldenBase = ref<Box[]>(
+    const golden = ref<Box[]>(
         [
-            {type: "Monitor", width: 640, height: 480, top: 20, left: 20},
-            {type: "Monitor", width: 1280, height: 720, top: 10, left: 160},
+            {type: "Monitor", width: 640, height: 480, top: 20, left: 20, unit: "milli"},
+            {type: "Monitor", width: 1280, height: 720, top: 10, left: 160, unit: "milli"},
+            {type: "Monitor", aspect: { w: 21, h: 9, arePixelNums: false }, diagonal: 1800, top: 30, left: 30, unit: "milli"}
         ]
     );
 
-    const scaling = (src: Box[]): Box[] => {
-        return src.map(value => ({...value, width: value.width * scale.value, height: value.height * scale.value}));
+    const scaling = (src: Box[]): Box1[] => {
+        return src.map(value => {
+            const v = changeToBox1(value);
+            return {...v, width: v.width * scale.value, height: v.height * scale.value};
+        });
     };
 
     const scalingBoxes = () => scaling(boxes.value);
-    const golden = () => {
-        boxes.value = goldenBase.value;
-        return scalingBoxes();
+    const setGolden = () => {
+        boxes.value = golden.value;
     }
 
     const releaseCurrentSelectedItem = ref<() => void>(() => {});
 
-    return {boxes, scale, scalingBoxes, golden, releaseCurrentSelectedItem };
+    return {boxes, scale, scalingBoxes, setGolden, releaseCurrentSelectedItem };
 });
