@@ -5,9 +5,11 @@ import length from "convert-units/lib/cjs/definitions/length";
 import { ItemType } from "../lib/types";
 
 
-export type LengthUnit = "mm" | "in";
+export type LengthUnit = "mm" | "cm" | "in";
 
 export interface BoxBaseData {
+    key: string;
+    id: number;
     type: ItemType;
     top: number;
     left: number;
@@ -45,6 +47,8 @@ export const isBox2 = (src: Box): src is Box2 => {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+export const maxBoxNum = 6;
+
 export const changeToBox1 = (src: Box): Box1 => {
     if (isBox2(src)) {
         // a = aspect.h / aspect.w
@@ -63,4 +67,12 @@ export const changeToBox1 = (src: Box): Box1 => {
 const convertFunc = configureMeasurements({length});
 export const convert = (num: number, from: LengthUnit, to: LengthUnit): number => {
     return convertFunc(num).from(from).to(to);
+};
+
+export const getRandStr = (size: number): string => {
+    const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const chars = alphabets + numbers;
+
+    return new Array<string>(size).fill("").map(_ => chars[Math.floor(Math.random() * chars.length)]).join("");
 };

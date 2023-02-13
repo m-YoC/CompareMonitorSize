@@ -1,5 +1,5 @@
 <template>
-    <div class="flowbox" :style="[sizeStyle, positionStyle, zIndexStyle]" @pointerdown="pointerDownEvent">
+    <div class="flowbox" :style="[sizeStyle, positionStyle]" @pointerdown="pointerDownEvent">
         <slot>{{ "FlowBox" }}</slot>
     </div>
 </template>
@@ -9,9 +9,7 @@ import { ref, reactive, computed, onMounted, CSSProperties } from "vue";
 import { usePointerStore } from "../state/state";
 import { useItemStore } from "../state/state";
 
-const props = defineProps<{width: number, height: number, top: number, left: number, id: number}>();
-
-const isSelected = ref(false);
+const props = defineProps<{width: number, height: number, top: number, left: number, boxKey: string}>();
 
 const fixPosition = (top: number, left: number) => {
     const viewAreaRect = document.getElementById("view-area")?.getBoundingClientRect() ?? {top: 0, left: 0, width: 0, height: 0};
@@ -39,7 +37,6 @@ onMounted(() => {
 
 const sizeStyle = computed(() => ({ width: props.width + "px", height: props.height + "px"}));
 const positionStyle = computed(() => ({ top: boxPosition.top + "px", left: boxPosition.left + "px"}));
-const zIndexStyle = computed(() => ({ zIndex: (isSelected.value ? 1 : 0)}));
 
 const pointerDownXY = reactive({x: 0, y: 0, top: 0, left: 0});
 const pStore = usePointerStore();
@@ -53,11 +50,7 @@ const pointerDownEvent = (e: PointerEvent) => {
     pointerDownXY.left = boxPosition.left;
     pointerDownXY.top = boxPosition.top;
 
-    iStore.releaseCurrentSelectedItem();
-    isSelected.value = true;
-    iStore.releaseCurrentSelectedItem = () => {
-        isSelected.value = false;
-    };
+    iStore.setSelectedItemKey(props.boxKey);
 
     pStore.isDown = true;
 
@@ -74,7 +67,8 @@ const pointerDownEvent = (e: PointerEvent) => {
 
     pStore.upEvent = (e: PointerEvent) => {
         e.preventDefault();
-        iStore.boxes[props.id] = {...iStore.boxes[props.id], top: boxPosition.top, left: boxPosition.left};
+        const index = iStore.boxes.findIndex(v => v.key === props.boxKey);
+        iStore.boxes[index] = {...iStore.boxes[index], top: boxPosition.top, left: boxPosition.left};
         pStore.clear();
     };
 

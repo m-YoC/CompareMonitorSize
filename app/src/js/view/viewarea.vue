@@ -2,7 +2,7 @@
     <div class="view" id="view-area">
         <div>View</div>
         <div>{{ testStore.hello() }}</div>
-        <Box v-for="box, idx in boxes" :key="idx" :id="idx" :width="box.width" :height="box.height" :top="box.top" :left="box.left">
+        <Box v-for="box in boxes" :key="box.key" :boxKey="box.key" :width="box.width" :height="box.height" :top="box.top" :left="box.left">
             <Selector :type="box.type"/>
         </Box>
     </div>

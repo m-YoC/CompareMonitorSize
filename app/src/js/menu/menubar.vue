@@ -1,10 +1,10 @@
 <template>
-    <div class="menu" @click="() => testStore.ex()">Menu</div>
+    <div class="menu" @click="() => iStore.addNewBox()">Menu</div>
 </template>
 
 <script setup lang="ts">
-import { useTestStore } from "../state/state";
+import { useItemStore } from "../state/state";
 
-const testStore = useTestStore();
+const iStore = useItemStore();
 
 </script>
