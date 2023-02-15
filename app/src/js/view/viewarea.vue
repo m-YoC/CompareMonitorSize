@@ -1,5 +1,5 @@
 <template>
-    <div class="view" id="view-area">
+    <div class="view no-user-select" id="view-area">
         <div>View</div>
         <div>{{ testStore.hello() }}</div>
         <Box v-for="box in boxes" :key="box.key" :boxKey="box.key" :width="box.width" :height="box.height" :top="box.top" :left="box.left">
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from "vue";
+import { onMounted, computed, watch } from "vue";
 import Box from "./flowbox.vue";
 import Selector from "./item/selector.vue";
 import { useTestStore, useItemStore } from "../state/state";
@@ -21,6 +21,7 @@ onMounted(() => {
     iStore.setGolden();
 });
 
-const boxes = computed(() => iStore.scalingBoxes());
+const boxes = computed(() => iStore.scalingItems());
+
 
 </script>

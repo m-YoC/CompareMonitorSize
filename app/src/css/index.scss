@@ -9,17 +9,48 @@ html {
 
 html.lock-browser, body.lock-browser {
     overflow: hidden;
+    touch-action: none;
+}
+
+.no-user-select {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 header {
     background: lightcoral;
     text-align: center;
-    height: 3em;
+    height: 4rem;
 }
 
 .menu {
     background: lightgreen;
     text-align: center;
+    padding: 0.5rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    .item {
+        width: 2rem;
+        height: 2rem;
+        margin: 0.5rem;
+        background: #ccc;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        &.selected {
+            border: 2px solid #777e;
+        }
+    }
 }
 
 .view {
@@ -40,6 +71,17 @@ header {
 .settings {
     background: limegreen;
     text-align: center;
+
+    .monitor {
+        .with-radio {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+    }
 }
 
 footer {

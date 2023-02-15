@@ -5,14 +5,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, CSSProperties } from "vue";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import { usePointerStore } from "../state/state";
 import { useItemStore } from "../state/state";
+import { getRect } from "../lib/rect";
 
 const props = defineProps<{width: number, height: number, top: number, left: number, boxKey: string}>();
 
 const fixPosition = (top: number, left: number) => {
-    const viewAreaRect = document.getElementById("view-area")?.getBoundingClientRect() ?? {top: 0, left: 0, width: 0, height: 0};
+    const viewAreaRect = getRect("view-area");
     if (top < 0) top = 0;
     if(top > viewAreaRect.height - props.height) top = viewAreaRect.height - props.height;
 
@@ -35,6 +36,13 @@ onMounted(() => {
     });
 });
 
+const tl = computed(() => ({top: props.top, left: props.left}));
+watch(tl, () => {
+    const fixedPos = fixPosition(tl.value.top, tl.value.left);
+    boxPosition.top = fixedPos.top;
+    boxPosition.left = fixedPos.left;
+});
+
 const sizeStyle = computed(() => ({ width: props.width + "px", height: props.height + "px"}));
 const positionStyle = computed(() => ({ top: boxPosition.top + "px", left: boxPosition.left + "px"}));
 
@@ -44,13 +52,14 @@ const iStore = useItemStore();
 
 const pointerDownEvent = (e: PointerEvent) => {
     e.preventDefault();
+    pStore.clear();
 
     pointerDownXY.x = e.x;
     pointerDownXY.y = e.y;
     pointerDownXY.left = boxPosition.left;
     pointerDownXY.top = boxPosition.top;
 
-    iStore.setSelectedItemKey(props.boxKey);
+    iStore.selectItem(props.boxKey);
 
     pStore.isDown = true;
 

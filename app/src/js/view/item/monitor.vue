@@ -1,6 +1,6 @@
 <template>
-    <div class="view-monitor-bezel">
-        <div class="view-monitor-panel"></div>
+    <div class="view-monitor-bezel no-user-select">
+        <div class="view-monitor-panel no-user-select"></div>
     </div>
 </template>
 

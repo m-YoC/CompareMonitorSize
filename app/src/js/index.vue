@@ -1,6 +1,6 @@
 <template>
-    <Menu />
     <View />
+    <Menu />
     <Settings></Settings>
 </template>
 
