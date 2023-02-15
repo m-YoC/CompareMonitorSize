@@ -1,11 +1,15 @@
 @import url(~sanitize.css);
-
-$font-color: #444;
+@import "./color.scss";
 
 html {
     font-size: 16px;
-}
+    
+    @include color-theme {
+        color: color(fontcolor);
+        background: color(back);
+    }
 
+}
 
 html.lock-browser, body.lock-browser {
     overflow: hidden;

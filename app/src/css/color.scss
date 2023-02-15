@@ -1,0 +1,29 @@
+
+$light-colors: (
+    fontcolor: #444,
+    back: #fff,
+);
+
+$dark-colors: (
+    fontcolor: #ccc,
+    back: #333
+);
+
+
+@mixin color-theme {
+    @media (prefers-color-scheme: light) {
+        $theme: $light-colors !global;
+        @content;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        $theme: $dark-colors !global;
+        @content;
+    }
+
+    $theme: null !global;
+}
+
+@function color($key) {
+    @return map-get($theme, $key);
+}

@@ -4,14 +4,14 @@
         <div class="with-radio">
             <input type="radio" id="Box2" name="monitor-type" value="Box2" v-model="radio_vModel" v-on:change="radioChanged">
             <div>
-                <MonitorSettingsB2 :item="selectedItem" :readonly="selectedItem.base !== 'Box2'" />
+                <MonitorSettingsB2 :item="selectedItem" :readonly="selectedItem?.base !== 'Box2'" />
             </div>
         </div>
         <hr>
         <div class="with-radio">
             <input type="radio" id="Box1" name="monitor-type" value="Box1" v-model="radio_vModel" v-on:change="radioChanged">
             <div>
-                <MonitorSettingsB1 :item="selectedItem" :readonly="selectedItem.base !== 'Box1'" />
+                <MonitorSettingsB1 :item="selectedItem" :readonly="selectedItem?.base !== 'Box1'" />
             </div>
         </div>
         <hr>
@@ -24,7 +24,6 @@
 import { ref, toRef, computed, watch } from "vue";
 import { useItemStore } from "../state/state";
 import { Box, changeToBoxAll, changeFromBoxAll } from "../state/box";
-import { getAspectStr, getFixedLength } from "./settings_monitor";
 import MonitorSettingsB1 from "./settings_monitor_b1.vue";
 import MonitorSettingsB2 from "./settings_monitor_b2.vue";
 
@@ -43,7 +42,7 @@ const selectedItem = computed(() => {
         return boxAll;
     } else {
         radio_vModel.value = "";
-        return undefined;
+        return;
     }
 });
 
