@@ -1,5 +1,5 @@
 <template>
-    <Monitor v-if="type == 'Monitor'" />
+    <Monitor v-if="type == 'Monitor'" :boxKey="boxKey" />
 </template>
 
 <script setup lang="ts">
@@ -8,6 +8,7 @@ import { ItemType } from "./selector";
 
 defineProps<{
     type: ItemType;
+    boxKey: string;
 }>();
 
 </script>

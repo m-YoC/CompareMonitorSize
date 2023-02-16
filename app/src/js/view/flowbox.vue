@@ -33,6 +33,7 @@ onMounted(() => {
         const fixedPos = fixPosition(boxPosition.top, boxPosition.left);
         boxPosition.top = fixedPos.top;
         boxPosition.left = fixedPos.left;
+        iStore.changeScale();
     });
 });
 

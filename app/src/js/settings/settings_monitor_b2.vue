@@ -1,19 +1,25 @@
 <template>
-    <div>
-        <label for="input-aspect">Aspect:</label>
-        <input type="text" id="input-aspect" list="aspect" v-model="aspectStr" v-on:change="aspectChanged" :readonly="props.readonly" />
-        <datalist id="aspect">
-            <option v-for="s in getAspectStrArray()" :value="s" />
-        </datalist>
-    </div>
-    <div>
-        <label for="input-diagonal">Size:</label>
-        <input type="text" id="input-diagonal" v-model="diagonalStr" v-on:change="diagonalChanged" :readonly="props.readonly" />
-        <select v-model="unitStr" v-on:change="unitChanged">
-            <option value="in">inch</option>
-            <option value="mm">mm</option>
-            <option value="cm">cm</option>
-        </select>
+    <div class="settings-form">
+        <div class="settings-flex-item-label">
+            <label for="input-aspect">Aspect:</label>
+            <label for="input-diagonal">Size:</label>
+        </div>
+        <div class="settings-flex-item-form">
+            <div>
+                <input type="text" id="input-aspect" class="input-aspect" list="aspect" v-model="aspectStr" v-on:change="aspectChanged" :readonly="props.readonly" />
+                <datalist id="aspect">
+                    <option v-for="s in getAspectStrArray()" :value="s" />
+                </datalist>
+            </div>
+            <div>
+                <input type="text" id="input-diagonal" class="input-length" v-model="diagonalStr" v-on:change="diagonalChanged" :readonly="props.readonly" />
+                <select class="select-length" v-model="unitStr" v-on:change="unitChanged">
+                    <option value="in">inch</option>
+                    <option value="mm">mm</option>
+                    <option value="cm">cm</option>
+                </select>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -22,7 +28,7 @@
 import { ref, computed, watch } from "vue";
 import { useItemStore } from "../state/state";
 import { Box, BoxAll, changeFromBoxAll, convertBoxUnit } from "../state/box";
-import { getAspectStr, getFixedLength, getAspectStrArray, getAspectDataFromStr } from "./settings_monitor";
+import { getAspectStr, getFixedLength, getAspectStrArray, getAspectDataFromStr, isDataOfSpecialList } from "./settings_monitor";
 
 const props = defineProps<{
     item: BoxAll;
@@ -33,20 +39,23 @@ const iStore = useItemStore();
 
 const item = computed(() => props.item);
 
-const aspectStr = ref(getAspectStr(item.value.aspect));
+const aspectStr = ref(item.value?.aspectStr ? item.value.aspectStr : getAspectStr(item.value.aspect));
 const diagonalStr = ref(getFixedLength(item.value.diagonal, item.value.unit.b2));
 const unitStr = ref(item.value.unit.b2);
 
 watch([item], () => {
-    aspectStr.value = getAspectStr(item.value.aspect);
+    aspectStr.value = item.value?.aspectStr ? item.value.aspectStr : getAspectStr(item.value.aspect);
     diagonalStr.value = getFixedLength(item.value.diagonal, item.value.unit.b2);
     unitStr.value = item.value.unit.b2;
 });
 
 const aspectChanged = () => {
     const aspect = getAspectDataFromStr(aspectStr.value);
+    console.log(aspectStr.value, aspect);
+    const str = isDataOfSpecialList(aspectStr.value) ? aspectStr.value : undefined;
+
     if(aspect && item.value.base === "Box2"){
-        iStore.setItem(changeFromBoxAll({ ...item.value, aspect }));
+        iStore.setItem(changeFromBoxAll({ ...item.value, aspect, aspectStr: str }));
     }
 };
 

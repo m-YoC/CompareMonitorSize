@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
-import { Box, Box1, Box2, BoxBaseData, extractBoxBase, changeToBox1, convertBoxUnit, getRandStr, maxBoxNum } from "./box";
-import { getRect } from "../lib/rect";
+import { Box, Box1, Box2, BoxBaseData, extractBoxBase, changeToBox1, convertBoxUnit, getRandStr } from "./box";
+import { getRect, getScreenRect } from "../lib/rect";
 
 // Composition API type
 export const useTestStore = defineStore("test", () => {
@@ -55,6 +55,8 @@ export const useItemStore = defineStore("item", () => {
     const boxes = ref<Box[]>([]);
     const scale = ref(1);
 
+    const maxBoxNum = () => 6;
+
     const preset: Box = {key: "0", id: 0, type: "Monitor", aspect: { w: 1920, h: 1080, arePixelNums: true }, diagonal: 23, top: 0, left: 0, unit: {b1: "mm", b2: "in"} };
     const golden = ref<Box[]>(
         [
@@ -65,6 +67,15 @@ export const useItemStore = defineStore("item", () => {
     );
     const setGolden = () => {
         boxes.value = golden.value.map(v => ({...v, key: getRandStr(32)}));
+        changeScale();
+    }
+
+    const changeScale = () => {
+        const screen = getScreenRect();
+        const ws = boxes.value.map(v => convertBoxUnit(changeToBox1(v), {...v.unit, b1: "mm"}).width);
+        const maxBoxWidth = ws.reduce((a, b) => Math.max(a, b));
+
+        scale.value = screen.width > 1024 ? screen.width / (3 * maxBoxWidth) : screen.width / (1.5 * maxBoxWidth);
     }
 
     const scaling = (src: Box[]): Box1[] => {
@@ -82,7 +93,7 @@ export const useItemStore = defineStore("item", () => {
     
     const addNewItem = () => {
         const id = boxes.value.length;
-        if (id >= maxBoxNum) return;
+        if (id >= maxBoxNum()) return;
         const key = getRandStr(32);
         // console.log(id, key);
         const itemB1 = convertBoxUnit(changeToBox1(preset), {...preset.unit, b1: "mm"});
@@ -91,6 +102,7 @@ export const useItemStore = defineStore("item", () => {
         const left = viewAreaRect.width / 2 - itemB1.width * scale.value / 2;
 
         boxes.value.push({...preset, top, left, key, id});
+        changeScale();
 
         return key;
     };
@@ -120,6 +132,7 @@ export const useItemStore = defineStore("item", () => {
         if (index === -1) return false;
 
         boxes.value[index] = { ...item };
+        changeScale();
         return true;
     }
 
@@ -143,10 +156,11 @@ export const useItemStore = defineStore("item", () => {
         boxes.value.forEach(v => {
             if (v.id > pops.id) v.id--;
         });
+        changeScale();
 
         return true;
     }
 
-    return {boxes, scale, scalingItems, setGolden, 
+    return {boxes, scale, maxBoxNum, scalingItems, setGolden, changeScale,
         addNewItem, selectedItemKey, selectItem, getSelectedItem, setItem, updateSelectedItemPosToCenter, deleteSelectedItem };
 });

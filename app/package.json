@@ -33,6 +33,7 @@
     "yarn": "^1.22.19"
   },
   "dependencies": {
+    "@iconify-prerendered/vue-material-symbols": "^0.21.1675843592",
     "@types/convert-units": "^2.3.5",
     "@types/vue": "^2.0.0",
     "@vue/cli-service": "^5.0.8",

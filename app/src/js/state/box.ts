@@ -22,6 +22,7 @@ export interface BoxBaseData {
     top: number;
     left: number;
     unit: LengthUnits;
+    aspectStr?: string | undefined;
 };
 
 interface BoxSize1 {
@@ -57,10 +58,6 @@ export const isBox2 = (src: Box): src is Box2 => {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-export const maxBoxNum = 6;
-
-
-
 const convertFunc = configureMeasurements({length});
 export const convert = (num: number, from: LengthUnit, to: LengthUnit): number => {
     return round(convertFunc(num).from(from).to(to), eachUnitDigit[to]);
@@ -88,7 +85,7 @@ export const getRandStr = (size: number): string => {
 };
 
 export const extractBoxBase = (src: Box): BoxBaseData => {
-    return {key: src.key, id: src.id, type: src.type, top: src.top, left: src.left, unit: src.unit };
+    return {key: src.key, id: src.id, type: src.type, top: src.top, left: src.left, unit: src.unit, aspectStr: src?.aspectStr };
 };
 
 export const changeToBox1 = (src: Box): Box1 => {

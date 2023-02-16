@@ -80,6 +80,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@iconify-prerendered/vue-material-symbols@^0.21.1675843592":
+  version "0.21.1675843592"
+  resolved "https://registry.yarnpkg.com/@iconify-prerendered/vue-material-symbols/-/vue-material-symbols-0.21.1675843592.tgz#7b7856d91083b7ccb93191eb176c6f3ff271daba"
+  integrity sha512-hGR7QQ6rwcvDRSumxQq9ywy4Z2Il9FOlypc9C0QbxVSzaJwKLk/Kuqn+iwqEM9H3RJy15SC7ZEdNPNds8r6evA==
+
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"

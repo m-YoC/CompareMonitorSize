@@ -15,8 +15,15 @@
             </div>
         </div>
         <hr>
-        <div @click="() => iStore.updateSelectedItemPosToCenter()">[move center]</div>
-        <div @click="() => iStore.deleteSelectedItem()">[delete]</div>
+        <div class="buttons">
+            <div class="move-center-button" @click="() => iStore.updateSelectedItemPosToCenter()">
+                <IconCenterFocusWeakOutline />
+            </div>
+            <div class="delete-button" @click="() => iStore.deleteSelectedItem()">
+                <IconDeleteOutlineRounded />
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -26,6 +33,7 @@ import { useItemStore } from "../state/state";
 import { Box, changeToBoxAll, changeFromBoxAll } from "../state/box";
 import MonitorSettingsB1 from "./settings_monitor_b1.vue";
 import MonitorSettingsB2 from "./settings_monitor_b2.vue";
+import { IconCenterFocusWeakOutline, IconDeleteOutlineRounded } from "@iconify-prerendered/vue-material-symbols";
 
 const iStore = useItemStore();
 

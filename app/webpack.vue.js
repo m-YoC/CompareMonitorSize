@@ -1,5 +1,6 @@
 const path = require("path");
 const common = require("./webpack.common.js");
+const entries = require("./webpack.entries.js");
 const rules = require("./webpack.rules.js");
 const { VueLoaderPlugin } = require("vue-loader");
 

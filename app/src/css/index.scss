@@ -1,9 +1,38 @@
 @import url(~sanitize.css);
 @import "./color.scss";
 
+@mixin flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+@mixin button {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+@mixin mobile {
+    @media screen and (max-width: 640px) {
+        @content;
+    }
+}
+
+
 html {
     font-size: 16px;
-    
+    font-family: Roboto;
+    font-weight: 400;
+
     @include color-theme {
         color: color(fontcolor);
         background: color(back);
@@ -22,76 +51,215 @@ html.lock-browser, body.lock-browser {
 }
 
 header {
-    background: lightcoral;
     text-align: center;
-    height: 4rem;
-}
+    min-height: 4rem;
 
-.menu {
-    background: lightgreen;
-    text-align: center;
-    padding: 0.5rem;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-
-    .item {
-        width: 2rem;
-        height: 2rem;
-        margin: 0.5rem;
-        background: #ccc;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        cursor: pointer;
-
-        &.selected {
-            border: 2px solid #777e;
-        }
+    @include color-theme {
+        background: color(header);
+        border-bottom: 0.1rem solid color(fontcolor);
     }
+
+    .title {
+        font-weight: 700;
+        font-size: 2rem;
+
+        @include flex;
+    }
+
+    p {
+        margin: 0 0.25rem;
+    }
+
+    
 }
 
 .view {
     position: relative;
-    background: cyan;
     text-align: center;
-    height: 600px;
+    height: 30rem;
     overflow: hidden;
+
+    @include color-theme {
+        background: color(back);
+    }
 
     .flowbox {
         position: absolute;
-        cursor: grab;
-        // background: brown;
         text-align: center;
-    }
-}
 
-.settings {
-    background: limegreen;
-    text-align: center;
+        &:hover {
+            cursor: grab;
+        }
 
-    .monitor {
-        .with-radio {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
+        &:active {
+            cursor: grabbing;
         }
     }
 }
 
+.menu {
+    text-align: center;
+    padding: 0.5rem;
+
+    @include flex;
+
+    @include color-theme {
+        background: color(menu);
+    }
+
+    .item {
+        font-weight: 700;
+        
+        @include button;
+
+        @include color-theme {
+            color: color(menu-item-fontcolor);
+            background: color(menu-item-back);
+        }
+
+        &.selected {
+            @include color-theme {
+                background: color(selected);
+            }
+        }
+    }
+}
+
+.settings-back {
+    padding: 1rem;
+
+    @include color-theme {
+        background: color(settings);
+    }
+}
+
+.settings {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+    max-width: 40rem;
+    min-height: 25rem;
+    border-radius: 0.5rem;
+
+    @include color-theme {
+        background: color(settings);
+        border: 0.2rem solid color(menu);
+    }
+
+    .select-type {
+        font-size: 1.4rem;
+        margin: 1rem;
+        width: 10rem;
+        text-align: center;
+
+        @include color-theme {
+            color: color(fontcolor);
+            background: color(settings);
+            border: 0.2rem solid color(menu);
+        }
+    }
+
+    hr {
+        border-style: none;
+
+        @include color-theme {
+            border-top: 0.1rem solid color(menu);
+        }
+    }
+
+    .monitor {
+        .with-radio {
+            @include flex;
+        }
+
+        input[type=radio] {
+            margin: 1rem;
+
+            @include color-theme {
+                accent-color: color(selected);
+                background: color(settings-button);
+            }
+        }
+
+        .buttons {
+            @include flex;
+            // justify-content: flex-end;
+
+            .move-center-button, .delete-button {
+                @include button;
+                margin-left: 2rem;
+                margin-right: 2rem;
+    
+                @include color-theme {
+                    color: color(menu-item-fontcolor);
+                    background: color(settings-button);
+                }
+            }
+        }
+        
+    }
+
+    .settings-form {
+        @include flex;
+        flex-wrap: nowrap;
+
+        .settings-flex-item-form {
+            width: auto;
+        }
+
+        label {
+            display: block;
+            width: 5rem;
+            text-align: right;
+            margin: 0.1rem 0.5rem;
+        }
+    
+        .input-aspect {
+            width: 20rem;
+
+            @include mobile {
+                width: 12rem;
+            }
+        }
+
+        .input-length {
+            width: 13rem;
+
+            @include mobile {
+                width: 6rem;
+            }
+        }
+
+        .select-length {
+            width: 6rem;
+
+            @include mobile {
+                width: 5rem;
+            }
+        }
+    
+        .input-aspect, .input-length, .select-length {
+            font-size: 1.2rem;
+            margin: 0.1rem 0.5rem;
+
+            @include color-theme {
+                color: color(fontcolor);
+                background: color(settings);
+                border: 0.2rem solid color(menu);
+            }
+        }
+    }
+
+    
+}
+
 footer {
-    background: lightsalmon;
     text-align: center;
     bottom: 0;
+    margin: 1rem;
 
+    @include color-theme {
+        background: color(back);
+    }
 }
 

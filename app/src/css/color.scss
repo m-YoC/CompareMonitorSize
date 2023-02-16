@@ -1,13 +1,44 @@
 
 $light-colors: (
     fontcolor: #444,
+    header: #eee,
     back: #fff,
+    menu: #ddd,
+    menu-item-back: #bbb,
+    menu-item-fontcolor: #444,
+    selected: rgb(142, 152, 255),
+    settings: #eee,
+    settings-button: #ccc,
+
+    item-frame: #777e,
+);
+
+$light-colors-add: (
+    item-back: rgba(map-get($light-colors, back), 0.6),
+    item-back-selected: rgba(map-get($light-colors, selected), 0.2),
 );
 
 $dark-colors: (
     fontcolor: #ccc,
-    back: #333
+    header: #333,
+    back: #222,
+    menu: #444,
+    menu-item-back: #ccc,
+    menu-item-fontcolor: #222,
+    selected: rgb(255, 136, 86),
+    settings: #333,
+    settings-button: #999,
+    
+    item-frame: #ccce,
 );
+
+$dark-colors-add: (
+    item-back: rgba(map-get($dark-colors, back), 0.6),
+    item-back-selected: rgba(map-get($dark-colors, selected), 0.1),
+);
+
+$light-colors: map-merge($light-colors, $light-colors-add);
+$dark-colors: map-merge($dark-colors, $dark-colors-add);
 
 
 @mixin color-theme {
@@ -26,4 +57,8 @@ $dark-colors: (
 
 @function color($key) {
     @return map-get($theme, $key);
+}
+
+:root {
+    color-scheme: light dark;
 }

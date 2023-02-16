@@ -1,21 +1,27 @@
 <template>
-    <div>
-        <label for="input-width">Width:</label>
-        <input type="text" id="input-width" v-model="widthStr" v-on:change="widthChanged" :readonly="props.readonly" />
-        <select v-model="unitStr" v-on:change="unitChanged">
-            <option value="in">inch</option>
-            <option value="mm">mm</option>
-            <option value="cm">cm</option>
-        </select>
-    </div>
-    <div>
-        <label for="input-height">Height:</label>
-        <input type="text" id="input-height" v-model="heightStr" v-on:change="heightChanged" :readonly="props.readonly" />
-        <select v-model="unitStr" v-on:change="unitChanged">
-            <option value="in">inch</option>
-            <option value="mm">mm</option>
-            <option value="cm">cm</option>
-        </select>
+    <div class="settings-form">
+        <div class="settings-flex-item-label">
+            <label for="input-width">Width:</label>
+            <label for="input-height">Height:</label>
+        </div>
+        <div class="settings-flex-item-form">
+            <div>
+                <input type="text" id="input-width" class="input-length" v-model="widthStr" v-on:change="widthChanged" :readonly="props.readonly" />
+                <select class="select-length" v-model="unitStr" v-on:change="unitChanged">
+                    <option value="in">inch</option>
+                    <option value="mm">mm</option>
+                    <option value="cm">cm</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="input-height" class="input-length" v-model="heightStr" v-on:change="heightChanged" :readonly="props.readonly" />
+                <select class="select-length" v-model="unitStr" v-on:change="unitChanged">
+                    <option value="in">inch</option>
+                    <option value="mm">mm</option>
+                    <option value="cm">cm</option>
+                </select>
+            </div>
+        </div>
     </div>
 </template>
 
