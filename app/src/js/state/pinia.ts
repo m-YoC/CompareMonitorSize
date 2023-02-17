@@ -76,7 +76,13 @@ export const useItemStore = defineStore("item", () => {
         const ws = boxes.value.map(v => convertBoxUnit(changeToBox1(v), {...v.unit, b1: "mm"}).width);
         const maxBoxWidth = ws.reduce((a, b) => Math.max(a, b));
 
-        scale.value = screen.width > 1024 ? screen.width / (3 * maxBoxWidth) : screen.width / (1.5 * maxBoxWidth);
+        if (screen.width > 1024){
+            scale.value = screen.width / (3 * maxBoxWidth);
+        } else if(screen.width > 640) {
+            scale.value = screen.width / (2 * maxBoxWidth);
+        }else {
+            scale.value = screen.width / (1.5 * maxBoxWidth);
+        }
     }
 
     const scaling = (src: Box[]): Box1[] => {

@@ -45,6 +45,12 @@ html.lock-browser, body.lock-browser {
     touch-action: none;
 }
 
+body.lock-browser {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .no-user-select {
     user-select: none;
     -webkit-user-select: none;
@@ -76,8 +82,16 @@ header {
 .view {
     position: relative;
     text-align: center;
-    height: 30rem;
     overflow: hidden;
+
+    height: 40vw;
+    @media screen and (max-width: 1024px) {
+        height: 28rem;
+    }
+
+    @media screen and (max-width: 640px) {
+        height: 35rem;
+    }
 
     @include color-theme {
         background: color(back);
