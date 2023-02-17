@@ -10,6 +10,8 @@ docker-build: ## docker-compose build
 	docker-compose build
 log: ## view git log
 	git log --pretty=oneline
+push-pages: ## push public/ to pages branch
+	git subtree push --prefix=public/ . pages && git push origin pages:pages
 docker-modified-cgroup-dir:
 	sudo mkdir /sys/fs/cgroup/systemd && sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 move-parent-dir:
