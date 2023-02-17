@@ -10,7 +10,7 @@ interface BoxDB extends DBSchema {
 
 // deleteDB("boxDB-idb-store");
 
-const dbPromise = openDB<BoxDB>("boxDB-idb-store", 10, {
+const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1, {
     async upgrade(db, oldVersion) {
         console.log(oldVersion);
 
