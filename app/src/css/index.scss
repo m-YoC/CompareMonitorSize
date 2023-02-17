@@ -37,7 +37,6 @@ html {
         color: color(fontcolor);
         background: color(back);
     }
-
 }
 
 html.lock-browser, body.lock-browser {
@@ -91,7 +90,7 @@ header {
     }
 
     @media screen and (max-width: 640px) {
-        height: 35rem;
+        height: 36rem;
     }
 
     @include color-theme {
