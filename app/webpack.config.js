@@ -16,7 +16,7 @@ module.exports = merge(common.config, {
   mode: "development",
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "public-dev"),
+    path: path.resolve(__dirname, "public"),
   },
   devtool: "inline-source-map",
   /*cache: {
@@ -27,7 +27,7 @@ module.exports = merge(common.config, {
   },*/
   devServer: {
     static: {
-      directory: path.join(__dirname, "public-dev"),
+      directory: path.join(__dirname, "public"),
     },
     host: "0.0.0.0",
     port: "8080",

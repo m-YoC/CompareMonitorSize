@@ -17,7 +17,7 @@ module.exports = merge(common.config, {
   mode: "production",
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, `public`),
+    path: path.resolve(__dirname, `../public`),
   },
   performance: {
     maxEntrypointSize: 2000000,

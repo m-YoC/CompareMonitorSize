@@ -6,7 +6,7 @@ RUN apt-get update -qq && apt-get install -y make \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Adjust permissions (verification required) and create directories
-RUN umask 0000 && mkdir /frontend && mkdir /frontend/app && mkdir /frontend/default_files
+RUN umask 0000 && mkdir /frontend && mkdir /frontend/app && mkdir /frontend/default_files && mkdir /frontend/public
 
 WORKDIR /frontend
 ENV DOCKER_WORKDIR=/frontend
