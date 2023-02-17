@@ -8,11 +8,21 @@ interface BoxDB extends DBSchema {
     };
 }
 
-deleteDB("boxDB-idb-store");
+// deleteDB("boxDB-idb-store");
 
-const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1, {
-    upgrade(db) {
-        db.createObjectStore("boxes");
+const dbPromise = openDB<BoxDB>("boxDB-idb-store", 10, {
+    async upgrade(db, oldVersion) {
+        console.log(oldVersion);
+
+        if ( oldVersion < 1 ){
+            db.createObjectStore("boxes");
+        }
+
+        if ( db.version >= 2 ) {
+            console.log("clear", db.name);
+            deleteDB(db.name);
+        }
+        
     }
 });
 
