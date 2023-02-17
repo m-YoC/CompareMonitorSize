@@ -44,11 +44,14 @@ html.lock-browser, body.lock-browser {
     touch-action: none;
 }
 
-body.lock-browser {
-    height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
+/*
+@supports not (overscroll-behavior-y: none) {
+    body.lock-browser {
+        height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}*/
 
 @supports (overscroll-behavior-y: none) {
     body.lock-browser {
