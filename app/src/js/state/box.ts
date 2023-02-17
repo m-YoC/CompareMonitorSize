@@ -22,7 +22,7 @@ export interface BoxBaseData {
     top: number;
     left: number;
     unit: LengthUnits;
-    aspectStr?: string | undefined;
+    nameStr?: string | undefined;
 };
 
 interface BoxSize1 {
@@ -55,7 +55,6 @@ export const isBox2 = (src: Box): src is Box2 => {
     );
 };
 
-
 /////////////////////////////////////////////////////////////////////////////////////
 
 const convertFunc = configureMeasurements({length});
@@ -85,7 +84,7 @@ export const getRandStr = (size: number): string => {
 };
 
 export const extractBoxBase = (src: Box): BoxBaseData => {
-    return {key: src.key, id: src.id, type: src.type, top: src.top, left: src.left, unit: src.unit, aspectStr: src?.aspectStr };
+    return {key: src.key, id: src.id, type: src.type, top: src.top, left: src.left, unit: src.unit, nameStr: src?.nameStr };
 };
 
 export const changeToBox1 = (src: Box): Box1 => {

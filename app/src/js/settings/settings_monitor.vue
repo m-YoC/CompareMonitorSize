@@ -13,17 +13,7 @@
             <div>
                 <MonitorSettingsB1 :item="selectedItem" :readonly="selectedItem?.base !== 'Box1'" />
             </div>
-        </div>
-        <hr>
-        <div class="buttons">
-            <div class="move-center-button" @click="() => iStore.updateSelectedItemPosToCenter()">
-                <IconCenterFocusWeakOutline />
-            </div>
-            <div class="delete-button" @click="() => iStore.deleteSelectedItem()">
-                <IconDeleteOutlineRounded />
-            </div>
-        </div>
-        
+        </div>        
     </div>
 </template>
 
@@ -33,7 +23,7 @@ import { useItemStore } from "../state/state";
 import { Box, changeToBoxAll, changeFromBoxAll } from "../state/box";
 import MonitorSettingsB1 from "./settings_monitor_b1.vue";
 import MonitorSettingsB2 from "./settings_monitor_b2.vue";
-import { IconCenterFocusWeakOutline, IconDeleteOutlineRounded } from "@iconify-prerendered/vue-material-symbols";
+
 
 const iStore = useItemStore();
 
@@ -46,7 +36,7 @@ const selectedItem = computed(() => {
         const boxAll = changeToBoxAll(i);
         if(selectedKey.value !== i.key) radio_vModel.value = boxAll.base;
         selectedKey.value = i.key;
-        console.log(boxAll.id, boxAll.base);
+        // console.log(boxAll.id, boxAll.base);
         return boxAll;
     } else {
         radio_vModel.value = "";

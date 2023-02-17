@@ -8,7 +8,7 @@
             <div>
                 <input type="text" id="input-aspect" class="input-aspect" list="aspect" v-model="aspectStr" v-on:change="aspectChanged" :readonly="props.readonly" />
                 <datalist id="aspect">
-                    <option v-for="s in getAspectStrArray()" :value="s" />
+                    <option v-for="s in getNameStrArray()" :value="s" />
                 </datalist>
             </div>
             <div>
@@ -28,7 +28,7 @@
 import { ref, computed, watch } from "vue";
 import { useItemStore } from "../state/state";
 import { Box, BoxAll, changeFromBoxAll, convertBoxUnit } from "../state/box";
-import { getAspectStr, getFixedLength, getAspectStrArray, getAspectDataFromStr, isDataOfSpecialList } from "./settings_monitor";
+import { getNameStr, getFixedLength, getNameStrArray, getAspectDataFromStr, isDataOfSpecialList } from "./settings_monitor";
 
 const props = defineProps<{
     item: BoxAll;
@@ -39,23 +39,22 @@ const iStore = useItemStore();
 
 const item = computed(() => props.item);
 
-const aspectStr = ref(item.value?.aspectStr ? item.value.aspectStr : getAspectStr(item.value.aspect));
+const aspectStr = ref(item.value?.nameStr ? item.value.nameStr : getNameStr(item.value.aspect));
 const diagonalStr = ref(getFixedLength(item.value.diagonal, item.value.unit.b2));
 const unitStr = ref(item.value.unit.b2);
 
 watch([item], () => {
-    aspectStr.value = item.value?.aspectStr ? item.value.aspectStr : getAspectStr(item.value.aspect);
+    aspectStr.value = item.value?.nameStr ? item.value.nameStr : getNameStr(item.value.aspect);
     diagonalStr.value = getFixedLength(item.value.diagonal, item.value.unit.b2);
     unitStr.value = item.value.unit.b2;
 });
 
 const aspectChanged = () => {
     const aspect = getAspectDataFromStr(aspectStr.value);
-    console.log(aspectStr.value, aspect);
     const str = isDataOfSpecialList(aspectStr.value) ? aspectStr.value : undefined;
 
     if(aspect && item.value.base === "Box2"){
-        iStore.setItem(changeFromBoxAll({ ...item.value, aspect, aspectStr: str }));
+        iStore.setItem(changeFromBoxAll({ ...item.value, aspect, nameStr: str }));
     }
 };
 

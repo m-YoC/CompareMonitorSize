@@ -14,7 +14,7 @@ $light-colors: (
 );
 
 $light-colors-add: (
-    item-back: rgba(map-get($light-colors, back), 0.6),
+    item-back: rgba(map-get($light-colors, back), 0.7),
     item-back-selected: rgba(map-get($light-colors, selected), 0.2),
 );
 
@@ -33,7 +33,7 @@ $dark-colors: (
 );
 
 $dark-colors-add: (
-    item-back: rgba(map-get($dark-colors, back), 0.6),
+    item-back: rgba(map-get($dark-colors, back), 0.7),
     item-back-selected: rgba(map-get($dark-colors, selected), 0.1),
 );
 

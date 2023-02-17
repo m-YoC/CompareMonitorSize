@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import { Box, Box1, Box2, BoxBaseData, extractBoxBase, changeToBox1, convertBoxUnit, getRandStr } from "./box";
 import { getRect, getScreenRect } from "../lib/rect";
+import { presetMonitor } from "./items/preset";
 
 // Composition API type
 export const useTestStore = defineStore("test", () => {
@@ -57,7 +58,7 @@ export const useItemStore = defineStore("item", () => {
 
     const maxBoxNum = () => 6;
 
-    const preset: Box = {key: "0", id: 0, type: "Monitor", aspect: { w: 1920, h: 1080, arePixelNums: true }, diagonal: 23, top: 0, left: 0, unit: {b1: "mm", b2: "in"} };
+    const preset: Box = presetMonitor;
     const golden = ref<Box[]>(
         [
             {...extractBoxBase(preset), id: 0, width: 320, height: 240, top: 20, left: 20},
@@ -119,12 +120,14 @@ export const useItemStore = defineStore("item", () => {
         boxes.value.push(pops);
     };
 
-    const getSelectedItem = () => {
-        const index = boxes.value.findIndex(v => v.key === selectedItemKey.value);
+    const getItem = (key: string) => {
+        const index = boxes.value.findIndex(v => v.key === key);
         if (index === -1) return undefined;
 
         return boxes.value[index];
     }
+
+    const getSelectedItem = () => getItem(selectedItemKey.value);
 
     const setItem = (item: Box) => {
         const key = item.key;
@@ -162,5 +165,5 @@ export const useItemStore = defineStore("item", () => {
     }
 
     return {boxes, scale, maxBoxNum, scalingItems, setGolden, changeScale,
-        addNewItem, selectedItemKey, selectItem, getSelectedItem, setItem, updateSelectedItemPosToCenter, deleteSelectedItem };
+        addNewItem, selectedItemKey, selectItem, getItem, getSelectedItem, setItem, updateSelectedItemPosToCenter, deleteSelectedItem };
 });

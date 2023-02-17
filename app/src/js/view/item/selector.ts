@@ -1,2 +1,2 @@
 
-export type ItemType = "Monitor";
+export type ItemType = "Monitor" | "Others";

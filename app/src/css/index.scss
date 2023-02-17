@@ -181,22 +181,6 @@ header {
             }
         }
 
-        .buttons {
-            @include flex;
-            // justify-content: flex-end;
-
-            .move-center-button, .delete-button {
-                @include button;
-                margin-left: 2rem;
-                margin-right: 2rem;
-    
-                @include color-theme {
-                    color: color(menu-item-fontcolor);
-                    background: color(settings-button);
-                }
-            }
-        }
-        
     }
 
     .settings-form {
@@ -237,15 +221,45 @@ header {
                 width: 5rem;
             }
         }
-    
+
         .input-aspect, .input-length, .select-length {
-            font-size: 1.2rem;
             margin: 0.1rem 0.5rem;
+        }
+
+        .select-others {
+            width: 24rem;
+            margin: 2rem 0.5rem;
+
+            @include mobile {
+                width: 16rem;
+            }
+        }
+
+        .input-aspect, .input-length, .select-length, .select-others {
+            font-size: 1.2rem;
 
             @include color-theme {
                 color: color(fontcolor);
                 background: color(settings);
                 border: 0.2rem solid color(menu);
+            }
+        }
+
+        
+    }
+
+    .buttons {
+        @include flex;
+        // justify-content: flex-end;
+
+        .move-center-button, .delete-button {
+            @include button;
+            margin-left: 2rem;
+            margin-right: 2rem;
+
+            @include color-theme {
+                color: color(menu-item-fontcolor);
+                background: color(settings-button);
             }
         }
     }
