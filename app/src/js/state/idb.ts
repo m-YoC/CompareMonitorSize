@@ -9,7 +9,7 @@ interface BoxDB extends DBSchema {
 }
 
 
-const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1.1, {
+const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1.2, {
     upgrade(db) {
         db.createObjectStore("boxes");
     }
@@ -17,7 +17,7 @@ const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1.1, {
 
 
 export const dbSet = async (value: Box[]) => {
-    (await dbPromise).clear("boxes");
+    // (await dbPromise).clear("boxes");
     return (await dbPromise).put("boxes", JSON.stringify(value), "array");
 };
 
