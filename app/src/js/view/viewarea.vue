@@ -15,7 +15,7 @@ import { useItemStore } from "../state/state";
 const iStore = useItemStore();
 
 onMounted(() => {
-    iStore.setGolden();
+    iStore.init();
 });
 
 const boxes = computed(() => iStore.scalingItems());

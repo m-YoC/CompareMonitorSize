@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
+import { ref, watch } from "vue";
 import { Box, Box1, Box2, BoxBaseData, extractBoxBase, changeToBox1, convertBoxUnit, getRandStr } from "./box";
 import { getRect, getScreenRect } from "../lib/rect";
 import { presetMonitor } from "./items/preset";
+import { dbGet, dbSet } from "./idb";
 
 // Composition API type
 export const useTestStore = defineStore("test", () => {
@@ -55,6 +56,11 @@ export const useItemStore = defineStore("item", () => {
 
     const boxes = ref<Box[]>([]);
     const scale = ref(1);
+
+    watch(boxes, async () => {
+        dbSet(boxes.value);
+        // console.log(await dbGet());
+    }, {deep: true});
 
     const maxBoxNum = () => 6;
 
@@ -170,6 +176,20 @@ export const useItemStore = defineStore("item", () => {
         return true;
     }
 
-    return {boxes, scale, maxBoxNum, scalingItems, setGolden, changeScale,
+
+    const init = async () => {
+        // setGolden(); return;
+
+        const dbData = await dbGet();
+        if (dbData.length === 0) {
+            addNewItem();
+        } else {
+            boxes.value = dbData;
+        }
+
+        changeScale();
+    }
+
+    return {boxes, scale, maxBoxNum, init, scalingItems, setGolden, changeScale,
         addNewItem, selectedItemKey, selectItem, getItem, getSelectedItem, setItem, updateSelectedItemPosToCenter, deleteSelectedItem };
 });
