@@ -1,4 +1,4 @@
-import { openDB, DBSchema } from "idb";
+import { openDB, deleteDB, DBSchema } from "idb";
 import { Box } from "./box";
 
 interface BoxDB extends DBSchema {
@@ -8,8 +8,9 @@ interface BoxDB extends DBSchema {
     };
 }
 
+deleteDB("boxDB-idb-store");
 
-const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1.2, {
+const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1, {
     upgrade(db) {
         db.createObjectStore("boxes");
     }
