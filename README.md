@@ -1,5 +1,6 @@
 # Compare Monitor Size
 
+![image design](image.png)
 
 ## Used Tech
 
