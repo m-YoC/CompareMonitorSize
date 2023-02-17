@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <div class="item" v-for="item in items" :key="item.key" :class="{selected:isSelected(item.key)}" @click="() => iStore.selectItem(item.key)">{{}}</div>
+        <div class="item" v-for="item in items" :key="item.key" :class="{selected: isSelected(item.key)}" @click="() => iStore.selectItem(item.key)"></div>
         <div v-show="items.length < iStore.maxBoxNum()">
             <div class="item" @click="() => iStore.addNewItem()">
                 <IconAdd />
@@ -16,7 +16,7 @@ import { IconAdd } from "@iconify-prerendered/vue-material-symbols";
 
 const iStore = useItemStore();
 
-const items = computed(() => [...iStore.boxes].sort(((l, r) => l.id - r.id)));
+const items = computed(() => [...iStore.boxes].sort((l, r) => l.id - r.id));
 
 const isSelected = computed(() => (key: string) => iStore.selectedItemKey === key);
 

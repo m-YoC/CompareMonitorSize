@@ -8,6 +8,7 @@ const rules = require("./webpack.rules.js");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
@@ -61,5 +62,8 @@ module.exports = {
       new RemoveEmptyScriptsPlugin(),
       ...getEntriesHtml(entries.entries),
     ],
+    watchOptions: {
+      ignored: /node_modules/,
+    },
   },
 };

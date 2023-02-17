@@ -94,7 +94,7 @@ export const useItemStore = defineStore("item", () => {
     
     const addNewItem = () => {
         const id = boxes.value.length;
-        if (id >= maxBoxNum()) return;
+        if (id >= maxBoxNum()) return undefined;
         const key = getRandStr(32);
         // console.log(id, key);
         const itemB1 = convertBoxUnit(changeToBox1(preset), {...preset.unit, b1: "mm"});

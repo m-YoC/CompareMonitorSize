@@ -8,6 +8,8 @@ docker-down: ## docker-compose down
 	docker-compose down
 docker-build: ## docker-compose build
 	docker-compose build
+log: ## view git log
+	git log --pretty=oneline
 docker-modified-cgroup-dir:
 	sudo mkdir /sys/fs/cgroup/systemd && sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 move-parent-dir:

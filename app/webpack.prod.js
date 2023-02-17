@@ -10,7 +10,7 @@ const common_file = fs.existsSync("./webpack.vue.js") ? "./webpack.vue.js" : "./
 const common = require(common_file);
 
 const { cache } = require("webpack");
-
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 // eslint-disable-next-line no-undef
 module.exports = merge(common.config, {
@@ -23,5 +23,11 @@ module.exports = merge(common.config, {
     maxEntrypointSize: 2000000,
     maxAssetSize: 2000000,
     hints: false,
+  },
+  optimization: {
+    minimizer: [
+      "...", // Needed to keep js files compressed
+      new CssMinimizerPlugin(),
+    ],
   },
 });

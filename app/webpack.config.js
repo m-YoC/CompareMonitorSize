@@ -16,18 +16,18 @@ module.exports = merge(common.config, {
   mode: "development",
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "public-dev"),
   },
   devtool: "inline-source-map",
-  cache: {
+  /*cache: {
     type: "filesystem",
     buildDependencies: {
       // config: [__filename],
     },
-  },
+  },*/
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, "public-dev"),
     },
     host: "0.0.0.0",
     port: "8080",
