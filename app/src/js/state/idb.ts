@@ -9,7 +9,7 @@ interface BoxDB extends DBSchema {
 }
 
 
-const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1, {
+const dbPromise = openDB<BoxDB>("boxDB-idb-store", 1.1, {
     upgrade(db) {
         db.createObjectStore("boxes", {
             keyPath: "key",
