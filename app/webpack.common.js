@@ -51,7 +51,7 @@ module.exports = {
     },
     target: ["web", "es5"],
     plugins: [
-      new CleanWebpackPlugin(),
+      // new CleanWebpackPlugin(),
       new WebpackManifestPlugin({
         fileName: "manifest.json",
         writeToFileEmit: true,
