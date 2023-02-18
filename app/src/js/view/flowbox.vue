@@ -53,6 +53,7 @@ const iStore = useItemStore();
 
 const pointerDownEvent = (e: PointerEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     pStore.clear();
 
     pointerDownXY.x = e.x;
@@ -67,6 +68,7 @@ const pointerDownEvent = (e: PointerEvent) => {
     pStore.moveEvent = (e: PointerEvent) => {
         if (!pStore.isDown) return;
         e.preventDefault();
+        e.stopPropagation();
 
         const nextLeft = pointerDownXY.left + (e.x - pointerDownXY.x);
         const nextTop = pointerDownXY.top + (e.y - pointerDownXY.y);
@@ -77,6 +79,7 @@ const pointerDownEvent = (e: PointerEvent) => {
 
     pStore.upEvent = (e: PointerEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         const index = iStore.boxes.findIndex(v => v.key === props.boxKey);
         iStore.boxes[index] = {...iStore.boxes[index], top: boxPosition.top, left: boxPosition.left};
         pStore.clear();
