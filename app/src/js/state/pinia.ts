@@ -23,10 +23,12 @@ export const usePointerStore = defineStore("pointer", () => {
     const isDown = ref(false);
     const moveEvent = ref<(e: PointerEvent) => void>(() => {});
     const upEvent = ref<(e: PointerEvent) => void>(() => {});
+    const touchmoveStop = (e: TouchEvent) => e.preventDefault();
 
     const registerEvent = (pointerType: string) => {
-        window.addEventListener("pointermove", moveEvent.value);
-        window.addEventListener("pointerup", upEvent.value);
+        window.addEventListener("pointermove", moveEvent.value, { passive: false });
+        window.addEventListener("pointerup", upEvent.value, { passive: false });
+        document.addEventListener("touchmove", touchmoveStop, { passive: false });
 
         if(pointerType === "touch") {
             document.body.className = "lock-browser";
@@ -38,6 +40,7 @@ export const usePointerStore = defineStore("pointer", () => {
         isDown.value = false;
         window.removeEventListener("pointermove", moveEvent.value);
         window.removeEventListener("pointerup", upEvent.value);
+        document.removeEventListener("touchmove", touchmoveStop);
         document.body.className = "";
         document.documentElement.className = "";
         moveEvent.value = () => {};
