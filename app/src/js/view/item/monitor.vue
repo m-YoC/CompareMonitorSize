@@ -1,6 +1,6 @@
 <template>
     <div class="view-monitor-bezel no-user-select">
-        <div class="view-monitor-panel no-user-select" v-bind:class="[boxKey === iStore.selectedItemKey ? ' selected' : '']"></div>
+        <div class="view-monitor-panel no-user-select" v-bind:class="[boxKey === iStore.getSelectedItemKey() ? ' selected' : '']"></div>
     </div>
 </template>
 

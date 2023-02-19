@@ -18,7 +18,7 @@ onMounted(() => {
     iStore.init();
 });
 
-const boxes = computed(() => iStore.scalingItems());
+const boxes = computed(() => iStore.getScalingItems());
 
 
 </script>

@@ -62,25 +62,18 @@ export const convert = (num: number, from: LengthUnit, to: LengthUnit): number =
     return round(convertFunc(num).from(from).to(to), eachUnitDigit[to]);
 };
 
-export const convertBoxUnit = <T extends Box>(src: T, to: LengthUnits): T => {
+export const convertBoxUnit = <T extends Box>(src: T, to: Partial<LengthUnits>): T => {
+    const to2: LengthUnits = { ...src.unit, ...to }; //{ b1: to?.b1 ?? src.unit.b1, b2: to?.b2 ?? src.unit.b2 };
     if (isBox1(src)) {
         const from = src.unit.b1;
-        const width = convert(src.width, from, to.b1);
-        const height = convert(src.height, from, to.b1);
-        return { ...src, width, height, unit: to };
+        const width = convert(src.width, from, to2.b1);
+        const height = convert(src.height, from, to2.b1);
+        return { ...src, width, height, unit: to2 };
     } else {
         const from = src.unit.b2;
-        const diagonal = convert(src.diagonal, from, to.b2);
-        return {...src, diagonal, unit: to};
+        const diagonal = convert(src.diagonal, from, to2.b2);
+        return {...src, diagonal, unit: to2};
     }
-};
-
-export const getRandStr = (size: number): string => {
-    const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const numbers = "0123456789";
-    const chars = alphabets + numbers;
-
-    return new Array<string>(size).fill("").map(_ => chars[Math.floor(Math.random() * chars.length)]).join("");
 };
 
 export const extractBoxBase = (src: Box): BoxBaseData => {

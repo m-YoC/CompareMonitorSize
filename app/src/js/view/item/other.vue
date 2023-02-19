@@ -1,6 +1,6 @@
 <template>
     <div class="view-others-outer no-user-select">
-        <div class="view-others no-user-select" v-bind:class="[boxKey === iStore.selectedItemKey ? ' selected' : '']">
+        <div class="view-others no-user-select" v-bind:class="[boxKey === iStore.getSelectedItemKey() ? ' selected' : '']">
             <div v-if="isKeyboard(item?.nameStr ?? '')" class="keyboard-main-area" :style="[mainAreaStyle]" />
         </div>
     </div>

@@ -18,6 +18,6 @@ const iStore = useItemStore();
 
 const items = computed(() => [...iStore.boxes].sort((l, r) => l.id - r.id));
 
-const isSelected = computed(() => (key: string) => iStore.selectedItemKey === key);
+const isSelected = computed(() => (key: string) => iStore.getSelectedItemKey() === key);
 
 </script>

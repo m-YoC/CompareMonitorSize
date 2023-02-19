@@ -80,8 +80,9 @@ const pointerDownEvent = (e: PointerEvent) => {
     pStore.upEvent = (e: PointerEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        const index = iStore.boxes.findIndex(v => v.key === props.boxKey);
-        iStore.boxes[index] = {...iStore.boxes[index], top: boxPosition.top, left: boxPosition.left};
+        const item = iStore.getItem(props.boxKey); //findIndex(v => v.key === props.boxKey);
+        if(!item) return;
+        iStore.setItem({...item, top: boxPosition.top, left: boxPosition.left});
         pStore.clear();
     };
 

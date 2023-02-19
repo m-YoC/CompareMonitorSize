@@ -66,7 +66,7 @@ const diagonalChanged = () => {
 };
 
 const unitChanged = () => {
-    iStore.setItem(convertBoxUnit(changeFromBoxAll(item.value), {b1: item.value.unit.b1, b2: unitStr.value}));
+    iStore.setItem(convertBoxUnit(changeFromBoxAll(item.value), {b2: unitStr.value}));
 };
 
 </script>

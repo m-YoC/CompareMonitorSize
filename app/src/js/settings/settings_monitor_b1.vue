@@ -66,7 +66,7 @@ const heightChanged = () => {
 };
 
 const unitChanged = () => {
-    iStore.setItem(convertBoxUnit(changeFromBoxAll(item.value), {b1: unitStr.value, b2: item.value.unit.b2}));
+    iStore.setItem(convertBoxUnit(changeFromBoxAll(item.value), {b1: unitStr.value}));
 };
 
 </script>
