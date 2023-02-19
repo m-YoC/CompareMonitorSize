@@ -33,6 +33,16 @@ const getCenterPosition = (box: Box, scale: number) => {
     return {top, left};
 };
 
+const calcNewScale = (maxBoxWidth: number): number => {
+    if (maxBoxWidth <= 0) return 1;
+    const screen = getScreenRect();
+    const r = screen.width / maxBoxWidth;
+
+    if (screen.width > 1024) return r / 3;
+    if(screen.width > 640) return r / 2;
+    return r / 1.5;
+}
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -48,16 +58,7 @@ export const useItemStore = defineStore("item", () => {
     }
 
     const changeScale = () => {
-        const screen = getScreenRect();
-        const maxBoxWidth = getMaxWidthOfBoxes(boxes.value);
-
-        if (screen.width > 1024){
-            scale.value = screen.width / (3 * maxBoxWidth);
-        } else if(screen.width > 640) {
-            scale.value = screen.width / (2 * maxBoxWidth);
-        }else {
-            scale.value = screen.width / (1.5 * maxBoxWidth);
-        }
+        scale.value = calcNewScale(getMaxWidthOfBoxes(boxes.value));
     }
 
 
