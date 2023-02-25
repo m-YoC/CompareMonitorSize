@@ -1,5 +1,5 @@
-import { nextTick } from "vue";
-import { render, fireEvent } from "@testing-library/vue";
+import { fireEvent, RenderOptions } from "@testing-library/vue";
+import { render } from "@/lib_test/modified_render_vtl";
 import { setActivePinia, createPinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
 import { useItemStore } from "@/state/state";
@@ -8,15 +8,9 @@ import flushPromises from "flush-promises";
 import { presetMonitor } from "@/state/items/preset";
 import { changeToBoxAll } from "@/state/box";
 
-
-// import * as Icons from "@iconify-prerendered/vue-material-symbols/index";
-// const spyIconAdd = jest.spyOn(Icons, "IconAdd");
-// jest.mock("@iconify-prerendered/vue-material-symbols");
 jest.mock("@/state/idb");
 
 import App from "@/index.vue";
-
-// const sleep = (second) => new Promise(resolve => setTimeout(resolve, second * 1000));
 
 describe("page integration test", () => {
     // check preset monitor data!
@@ -37,19 +31,6 @@ describe("page integration test", () => {
         width: `${presetAll.width + 200}`,
         height: `${presetAll.height + 200}`,
     };
- 
-
-    const _render = async () => {
-        const app = render(App);
-        await nextTick();
-        await app.rerender({});
-        return app;
-    }
-
-    const _rerender = async (TestComponent: any) => {
-        await nextTick();
-        await TestComponent.rerender({});
-    }
 
     beforeEach(() => {
         setActivePinia(createPinia());
@@ -57,7 +38,7 @@ describe("page integration test", () => {
 
     describe("first check", () => {
         test("Render and init", async () => {
-            const app = await _render();
+            const app = await render(App);
             const boxes = app.queryAllByTestId(/^view-box/);
             expect(boxes.length).toBe(1);
             const menus = app.queryAllByTestId(/^menu-/);
@@ -79,12 +60,12 @@ describe("page integration test", () => {
     describe("control view area", () => {
         test("Clicking on an item selects the corresponding menu and settings", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             let boxes = app.queryAllByTestId(/^view-box/);
             expect(boxes.length).toBe(1);
     
             await fireEvent.click(boxes[0]);
-            await _rerender(app);
+            await app.update();
     
             // menu check
             const itemKey = iStore.getSelectedItemKey();
@@ -106,19 +87,19 @@ describe("page integration test", () => {
         // PointerEvent does not receive MouseEventProps
         test.skip("Move item", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             let boxes = app.queryAllByTestId(/^view-box/);
             expect(boxes.length).toBe(1);
     
             await fireEvent.click(boxes[0]);
-            await _rerender(app);
+            await app.update();
 
             const selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
             await fireEvent.pointerDown(boxes[0], { x: 0, y: 0, clientX: 0, clientY: 0 });
-            await _rerender(app);
+            await app.update();
             await fireEvent.pointerMove(window, { x: 0, y: 0, clientX: 0, clientY: 0 });
             await fireEvent.pointerUp(window);
-            await _rerender(app);
+            await app.update();
             const selectedItem2 = changeToBoxAll(iStore.getSelectedItem()!);
 
             console.log(selectedItem.top, selectedItem2.top);
@@ -129,13 +110,13 @@ describe("page integration test", () => {
 
     describe("control menu", () => {
         test("Click add button of menu", async () => {
-            const app = await _render();
+            const app = await render(App);
             let boxes = app.queryAllByTestId(/^view-box/);
             expect(boxes.length).toBe(1);
     
             const menuAdd = app.getByTestId("menu-add");
             await fireEvent.click(menuAdd);
-            await _rerender(app);
+            await app.update();
             boxes = app.queryAllByTestId(/^view-box/);
             expect(boxes.length).toBe(2);
             const menus = app.queryAllByTestId(/^menu-/);
@@ -144,11 +125,11 @@ describe("page integration test", () => {
 
         test("Click item button of menu", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
     
             const menus = app.queryAllByTestId(/^menu-item/);
             await fireEvent.click(menus[0]);
-            await _rerender(app);
+            await app.update();
   
             // menu check
             const itemKey = iStore.getSelectedItemKey();
@@ -172,12 +153,12 @@ describe("page integration test", () => {
         const selectItem = async (app: any) => {
             const menus = app.queryAllByTestId(/^menu-item/);
             await fireEvent.click(menus[0]);
-            await _rerender(app);
+            await app.update();
         };
 
         test("Select type", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             await selectItem(app);
             
             const elem = app.getByTestId(/settings-select-type/) as HTMLSelectElement;
@@ -185,13 +166,13 @@ describe("page integration test", () => {
 
             // await fireEvent.change(elem, { target: { value: "Others" } });
             await fireEvent.update(elem, "Others");
-            await _rerender(app);
+            await app.update();
 
             expect(elem.value).toMatch(/Others/);
             expect(iStore.getSelectedItem()!.type).toEqual("Others");
 
             await fireEvent.update(elem, "Monitor");
-            await _rerender(app);
+            await app.update();
 
             expect(elem.value).toMatch(/Monitor/);
             expect(iStore.getSelectedItem()!.type).toEqual("Monitor");
@@ -199,7 +180,7 @@ describe("page integration test", () => {
 
         test("Write new aspect and size", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             await selectItem(app);
 
             let selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -217,7 +198,7 @@ describe("page integration test", () => {
             await fireEvent.change(aspectElem);
             await fireEvent.update(sizeElem, updatedDataText.size);
             await fireEvent.change(sizeElem);
-            await _rerender(app);
+            await app.update();
 
             // check if they were written or not
             expect(aspectElem.value).toMatch(updatedDataText.aspectRegex);
@@ -241,7 +222,7 @@ describe("page integration test", () => {
 
         test("Select radio and write new width and height", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             await selectItem(app);
 
             let selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -257,14 +238,14 @@ describe("page integration test", () => {
             // select radio
             const radioElem = app.getByTestId(/settings-radio-b1/) as HTMLInputElement;
             await fireEvent.update(radioElem);
-            await _rerender(app);
+            await app.update();
 
             // write
             await fireEvent.update(widthElem, updatedDataText.width);
             await fireEvent.change(widthElem);
             await fireEvent.update(heightElem, updatedDataText.height);
             await fireEvent.change(heightElem);
-            await _rerender(app);
+            await app.update();
 
             // check if they were written or not
             expect(+widthElem.value).toBeCloseTo(+updatedDataText.width);
@@ -289,7 +270,7 @@ describe("page integration test", () => {
         describe("If not selected proper radio button when we update values...", () => {
             test("Cannot write new aspect and size", async () => {
                 const iStore = useItemStore();
-                const app = await _render();
+                const app = await render(App);
                 await selectItem(app);
     
                 let selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -305,14 +286,14 @@ describe("page integration test", () => {
                 // select radio
                 const radioElem = app.getByTestId(/settings-radio-b1/) as HTMLInputElement;
                 await fireEvent.update(radioElem);
-                await _rerender(app);
+                await app.update();
     
                 // write
                 await fireEvent.update(aspectElem, updatedDataText.aspect);
                 await fireEvent.change(aspectElem);
                 await fireEvent.update(sizeElem, updatedDataText.size);
                 await fireEvent.change(sizeElem);
-                await _rerender(app);
+                await app.update();
     
                 // new selectedItem do not match
                 selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -323,7 +304,7 @@ describe("page integration test", () => {
     
             test("Cannot write new width and height", async () => {
                 const iStore = useItemStore();
-                const app = await _render();
+                const app = await render(App);
                 await selectItem(app);
     
                 let selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -341,7 +322,7 @@ describe("page integration test", () => {
                 await fireEvent.change(widthElem);
                 await fireEvent.update(heightElem, updatedDataText.height);
                 await fireEvent.change(heightElem);
-                await _rerender(app);
+                await app.update();
     
                 // new selectedItem do not match
                 selectedItem = changeToBoxAll(iStore.getSelectedItem()!);
@@ -352,7 +333,7 @@ describe("page integration test", () => {
 
         test("Move selectedItem's position to center", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             await selectItem(app);
 
             // (New item is initially placed in the center)
@@ -378,7 +359,7 @@ describe("page integration test", () => {
 
         test("Delete selectedItem", async () => {
             const iStore = useItemStore();
-            const app = await _render();
+            const app = await render(App);
             await selectItem(app);
 
             // check
