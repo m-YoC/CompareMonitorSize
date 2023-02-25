@@ -48,6 +48,9 @@ module.exports = {
     },
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".json", ".css", ".scss", ".sass"],
+      alias: {
+        "@": rules.tsRule.include,
+      },
     },
     target: ["web", "es5"],
     plugins: [

@@ -2,7 +2,7 @@
     <div v-if="selectedItem" class="others">
         <hr>
         <div class="settings-form">
-            <select class="select-others" v-model="itemStr" v-on:change="itemChanged">
+            <select class="select-others" v-model="itemStr" v-on:change="itemChanged" data-testid="settings-select-others-item">
                 <option v-for="item in KeyboardList" :value="item.nameStr">{{ item.nameStr }}</option>
             </select>
         </div>

@@ -6,26 +6,27 @@ import { getRandStr } from "../lib/rand_str";
 import { presetMonitor } from "./items/preset";
 import { dbGet, dbSet } from "./idb";
 
-const maxBoxNum = () => 6;
+export const maxBoxNum = () => 6;
 
-const goldenItems: Box[] = [
+export const goldenItems: Box[] = [
     {...extractBoxBase(presetMonitor), id: 0, width: 320, height: 240, top: 20, left: 20},
     {...extractBoxBase(presetMonitor), id: 1, aspect: { w: 1920, h: 1080, arePixelNums: true }, diagonal: 23, top: 30, left: 30},
     {...extractBoxBase(presetMonitor), id: 2, aspect: { w: 21, h: 9, arePixelNums: false }, diagonal: 27.1, top: 30, left: 30}
 ];
 
-const getB1mm = (box: Box) => {
+export const getB1mm = (box: Box) => {
     return convertBoxUnit(changeToBox1(box), {b1: "mm"});
 };
 
-const getMaxWidthOfBoxes = (boxes: Box[]) => {
+export const getMaxWidthOfBoxes = (boxes: Box[]) => {
     const widthSet = boxes.map(v => getB1mm(v).width);
+    if (widthSet.length === 0) return undefined;
     const maxBoxWidth = widthSet.reduce((a, b) => Math.max(a, b));
     return maxBoxWidth;
 };
 
 
-const getCenterPosition = (box: Box, scale: number) => {
+export const getCenterPosition = (box: Box, scale: number) => {
     const boxB1mm = getB1mm(box);
     const viewAreaRect = getRect("view-area");
     const top  = viewAreaRect.height / 2 - boxB1mm.height * scale / 2;
@@ -33,7 +34,7 @@ const getCenterPosition = (box: Box, scale: number) => {
     return {top, left};
 };
 
-const calcNewScale = (maxBoxWidth: number): number => {
+export const calcNewScale = (maxBoxWidth: number): number => {
     if (maxBoxWidth <= 0) return 1;
     const screen = getScreenRect();
     const r = screen.width / maxBoxWidth;
@@ -58,7 +59,9 @@ export const useItemStore = defineStore("item", () => {
     }
 
     const changeScale = () => {
-        scale.value = calcNewScale(getMaxWidthOfBoxes(boxes.value));
+        const maxWidth = getMaxWidthOfBoxes(boxes.value);
+        if(!maxWidth) return;
+        scale.value = calcNewScale(maxWidth);
     }
 
 
@@ -148,12 +151,12 @@ export const useItemStore = defineStore("item", () => {
         // setGolden(); return;
 
         const dbData = await dbGet();
+        
         if (dbData.length === 0) {
             addNewItem();
         } else {
             boxes.value = dbData;
         }
-
     }
 
     watch(boxes, async () => {

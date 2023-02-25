@@ -2,14 +2,14 @@
     <div v-if="selectedItem" class="monitor">
         <hr>
         <div class="with-radio">
-            <input type="radio" id="Box2" name="monitor-type" value="Box2" v-model="radio_vModel" v-on:change="radioChanged">
+            <input type="radio" id="Box2" name="monitor-type" value="Box2" v-model="radio_vModel" v-on:change="radioChanged" data-testid="settings-radio-b2">
             <div>
                 <MonitorSettingsB2 :item="selectedItem" :readonly="selectedItem?.base !== 'Box2'" />
             </div>
         </div>
         <hr>
         <div class="with-radio">
-            <input type="radio" id="Box1" name="monitor-type" value="Box1" v-model="radio_vModel" v-on:change="radioChanged">
+            <input type="radio" id="Box1" name="monitor-type" value="Box1" v-model="radio_vModel" v-on:change="radioChanged" data-testid="settings-radio-b1">
             <div>
                 <MonitorSettingsB1 :item="selectedItem" :readonly="selectedItem?.base !== 'Box1'" />
             </div>

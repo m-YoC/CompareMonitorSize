@@ -1,8 +1,8 @@
 <template>
     <div class="menu">
-        <div class="item" v-for="item in items" :key="item.key" :class="{selected: isSelected(item.key)}" @click="() => iStore.selectItem(item.key)"></div>
+        <div class="item" v-for="item in items" :key="item.key" :class="{selected: isSelected(item.key)}" @click="() => iStore.selectItem(item.key)" :data-testid="`menu-item ${item.key}`"></div>
         <div v-show="items.length < iStore.maxBoxNum()">
-            <div class="item" @click="() => iStore.addNewItem()">
+            <div class="item" @click="() => iStore.addNewItem()" data-testid="menu-add">
                 <IconAdd />
             </div>
         </div>

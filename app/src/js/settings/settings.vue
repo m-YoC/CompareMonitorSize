@@ -5,7 +5,7 @@
             <!---<div>{{ selectedItem?.type ?? "undef" }}</div>--->
             <!---<div>{{ selectedItemAll }}</div>--->
             <div v-if="selectedItem?.type">
-                <select class="select-type" v-model="typeStr" v-on:change="typeChanged">
+                <select class="select-type" v-model="typeStr" v-on:change="typeChanged" data-testid="settings-select-type">
                     <option value="Monitor">Monitor</option>
                     <option value="Others">Other Item</option>
                 </select>
@@ -15,10 +15,10 @@
             <div v-if="selectedItem?.type" >
                 <hr>
                 <div class="buttons">
-                    <div class="move-center-button" @click="() => iStore.updateSelectedItemPosToCenter()">
+                    <div class="move-center-button" @click="() => iStore.updateSelectedItemPosToCenter()" data-testid="settings-to-center">
                         <IconCenterFocusWeakOutline />
                     </div>
-                    <div class="delete-button" @click="() => iStore.deleteSelectedItem()">
+                    <div class="delete-button" @click="() => iStore.deleteSelectedItem()" data-testid="settings-delete">
                         <IconDeleteOutlineRounded />
                     </div>
                 </div>

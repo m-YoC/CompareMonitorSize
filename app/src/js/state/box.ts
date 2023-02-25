@@ -22,7 +22,7 @@ export interface BoxBaseData {
     top: number;
     left: number;
     unit: LengthUnits;
-    nameStr?: string | undefined;
+    nameStr?: string;
 };
 
 interface BoxSize1 {

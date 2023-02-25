@@ -1,5 +1,5 @@
 <template>
-    <div class="flowbox" :style="[sizeStyle, positionStyle]" @pointerdown="pointerDownEvent">
+    <div class="flowbox" :style="[sizeStyle, positionStyle]" @pointerdown="pointerDownEvent" :data-testid="`view-box ${boxKey}`">
         <slot>{{ "FlowBox" }}</slot>
     </div>
 </template>
@@ -65,7 +65,10 @@ const pointerDownEvent = (e: PointerEvent) => {
 
     pStore.isDown = true;
 
+    console.log("down", e.x, e.y, e.clientX);
+
     pStore.moveEvent = (e: PointerEvent) => {
+        console.log("move", e.x, e.y);
         if (!pStore.isDown) return;
         e.preventDefault();
         e.stopPropagation();
@@ -78,6 +81,7 @@ const pointerDownEvent = (e: PointerEvent) => {
     };
 
     pStore.upEvent = (e: PointerEvent) => {
+        console.log("up");
         e.preventDefault();
         e.stopPropagation();
         const item = iStore.getItem(props.boxKey); //findIndex(v => v.key === props.boxKey);
