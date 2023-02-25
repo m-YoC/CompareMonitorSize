@@ -6,13 +6,16 @@
         </div>
         <div class="settings-flex-item-form">
             <div>
-                <input type="text" id="input-aspect" class="input-aspect" list="aspect" v-model="aspectStr" v-on:change="aspectChanged" :readonly="props.readonly" />
+                <input type="text" id="input-aspect" class="input-aspect" list="aspect" 
+                    v-model="aspectStr" :placeholder="aspectPlaceHolder" 
+                    v-on:focus="aspectFocus" v-on:focusout="aspectFocusOut" v-on:change="aspectChanged" :readonly="props.readonly" />
                 <datalist id="aspect">
                     <option v-for="s in getNameStrArray()" :value="s" />
                 </datalist>
             </div>
             <div>
-                <input type="text" id="input-diagonal" class="input-length" v-model="diagonalStr" v-on:change="diagonalChanged" :readonly="props.readonly" />
+                <input type="number" :step="Math.pow(10, eachUnitDigit[item.unit.b2])" 
+                    id="input-diagonal" class="input-length" v-model="diagonalStr" v-on:change="diagonalChanged" :readonly="props.readonly" />
                 <select class="select-length" v-model="unitStr" v-on:change="unitChanged">
                     <option value="in">inch</option>
                     <option value="mm">mm</option>
@@ -27,7 +30,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useItemStore } from "../state/state";
-import { Box, BoxAll, changeFromBoxAll, convertBoxUnit } from "../state/box";
+import { eachUnitDigit, BoxAll, changeFromBoxAll, convertBoxUnit } from "../state/box";
 import { getNameStr, getFixedLength, getNameStrArray, getAspectDataFromStr, isDataOfSpecialList } from "./settings_monitor";
 
 const props = defineProps<{
@@ -49,12 +52,24 @@ watch([item], () => {
     unitStr.value = item.value.unit.b2;
 });
 
+const aspectPlaceHolder = ref(aspectStr.value);
+
+const aspectFocus = () => {
+    if(props.readonly) return;
+    aspectStr.value = "";
+};
+const aspectFocusOut = () => { 
+    if(props.readonly) return;
+    if (aspectStr.value === "") aspectStr.value = aspectPlaceHolder.value 
+};
+
 const aspectChanged = () => {
     const aspect = getAspectDataFromStr(aspectStr.value);
     const str = isDataOfSpecialList(aspectStr.value) ? aspectStr.value : undefined;
 
     if(aspect && item.value.base === "Box2"){
         iStore.setItem(changeFromBoxAll({ ...item.value, aspect, nameStr: str }));
+        if(aspectStr.value !== "") aspectPlaceHolder.value = aspectStr.value;
     }
 };
 

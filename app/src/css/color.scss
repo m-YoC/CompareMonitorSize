@@ -2,6 +2,9 @@
 $light-colors: (
     fontcolor: #444,
     header: #eee,
+    footerColor: #ccc,
+    anchorColor: #ccc,
+    anchorHoverColor: rgb(142, 152, 255),
     back: #fff,
     menu: #ddd,
     menu-item-back: #bbb,
@@ -21,6 +24,9 @@ $light-colors-add: (
 $dark-colors: (
     fontcolor: #ccc,
     header: #333,
+    footerColor: #555,
+    anchorColor: #555,
+    anchorHoverColor: rgb(255, 136, 86),
     back: #222,
     menu: #444,
     menu-item-back: #ccc,

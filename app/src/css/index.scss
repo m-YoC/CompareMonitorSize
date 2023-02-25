@@ -296,7 +296,20 @@ footer {
     margin: 1rem;
 
     @include color-theme {
+        color: color(footerColor);
         background: color(back);
+    }
+
+    a {
+        @include color-theme {
+            color: color(anchorColor);
+        }
+
+        &:hover {
+            @include color-theme {
+                color: color(anchorHoverColor);
+            }
+        }
     }
 }
 
