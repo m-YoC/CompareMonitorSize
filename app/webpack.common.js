@@ -65,7 +65,7 @@ module.exports = {
         writeToFileEmit: true,
       }),
       new MiniCssExtractPlugin({
-        filename: "[name]-[hash].bundle.css",
+        filename: "[name]-[fullhash].bundle.css",
       }),
       new RemoveEmptyScriptsPlugin(),
       ...getEntriesHtml(entries.entries),
