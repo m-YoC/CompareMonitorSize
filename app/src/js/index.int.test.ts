@@ -3,7 +3,6 @@ import { render } from "@/lib_test/modified_render_vtl";
 import { setActivePinia, createPinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
 import { useItemStore } from "@/state/state";
-import flushPromises from "flush-promises";
 
 import { presetMonitor } from "@/state/items/preset";
 import { changeToBoxAll } from "@/state/box";

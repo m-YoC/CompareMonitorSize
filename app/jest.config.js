@@ -10,7 +10,7 @@ module.exports = {
     // "**/__tests__/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)"
   ],
-  ...testPathIgnorePatterns,
+   ...testPathIgnorePatterns,
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
     "^.+\\.vue$": "@vue/vue3-jest",
