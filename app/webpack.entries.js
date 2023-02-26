@@ -6,7 +6,7 @@ const entries = [
   {
     html:   { filename: "index.html" },
     js:     { filename: "index"      , src: "index.ts"    },
-    css:    { filename: "index_style" , src: "index.scss"   },
+    css:    { filename: "index-style" , src: "index.scss"   },
   },/*
   {
     html:   { filename: "sub/sub.html" },

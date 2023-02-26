@@ -54,13 +54,18 @@ module.exports = {
     },
     target: ["web", "es5"],
     plugins: [
-      // new CleanWebpackPlugin(),
+      new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: [
+          "**/*",
+          "!meta/**"
+        ]
+      }),
       new WebpackManifestPlugin({
         fileName: "manifest.json",
         writeToFileEmit: true,
       }),
       new MiniCssExtractPlugin({
-        filename: "[name].bundle.css",
+        filename: "[name]-[hash].bundle.css",
       }),
       new RemoveEmptyScriptsPlugin(),
       ...getEntriesHtml(entries.entries),
